@@ -1,0 +1,4 @@
+fare un pop up per la vittoria
+fare un pop up per la sconfitta
+
+fare tutta la grafica
