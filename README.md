@@ -4,7 +4,7 @@
 ## if you want to play it click [HERE](https://lucaparmeggiani.github.io/dontTapWhiteTiles.github.io/dontTapWhiteTiles/)</br>
 
 ## v 1.1.0
-❌ removed some bugs on key pressing<hr>
+❌ fixed some bugs on key pressing<hr>
 <p>✔️ added possibility to submit a score by pressing <kbd>Enter</kbd><p>
 <p>✔️ added pesonal leaderboard</p>
 
