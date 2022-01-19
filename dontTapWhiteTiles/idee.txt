@@ -1,4 +1,3 @@
-fare un pop up per la vittoria
-fare un pop up per la sconfitta
+bottone cancella score (tutti) [poi lo farò anche per i singoli]
 
-fare tutta la grafica
+modificare tutta la grafica che fa schifo

@@ -1,12 +1,17 @@
-html, body{
-    margin: 0;
-    padding: 0;
+section.game{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-#container{
+#gameContainer{
     width: 600px;
     height: 600px;
     display: grid;
+    border: 1px solid black;
 }
 
 .sizeEasy{
@@ -44,15 +49,6 @@ html, body{
     background-color: white;
 }
 
-section{
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
 .info{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -60,28 +56,23 @@ section{
     text-align: center;
 }
 
-.score{
-    font-size: 19px;
-}
+.score{ font-size: 19px; }
 
-.timer{
-    font-size: 19px;
-}
+.timer{ font-size: 19px; }
 
 .button, .mode{
     border: 1px solid black;
     padding: 4px;
     transition: .2s;
-    /* sicuramente ci sono cose da fare */   
 }
 
-select{
+.info select{
     appearance: none;
     text-align: center;
     height: 28px;
     width: 100%;
     font-size: 16px;
-    margin: auto;   
+    margin: auto;
 }
 
 .button:hover, .mode:hover{
@@ -91,17 +82,11 @@ select{
     transition: .2s;
 }
 
-.point{
-    background-color: #161616;
-}
+.point{ transition: .1s; background-color: #292929; }
 
-.blinkRed{
-    background-color: red;
-}
+.blinkRed{ background-color: red; }
 
-#template{
-    display: none;
-}
+#tileTemplate{ display: none; }
 
 .endgame{
     display: none;

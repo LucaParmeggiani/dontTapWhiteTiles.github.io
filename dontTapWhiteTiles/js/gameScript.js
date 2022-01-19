@@ -5,13 +5,15 @@ var timer = null;
 var coordinates = {x: 0, y: 0};
 var preventDobuleInterval = false;
 var gameEnded = false;
+var modalStatus = false;
 
 var localScore =
     {
         id: "",
         time: 0,
-        difficulty: 0,
-        rawTime: 0
+        rawTime: 0,
+        date: new Date(),
+        rawDate: 0
     };
 
 var mouseInsideContainer = false;
@@ -19,13 +21,29 @@ var mouseInsideContainer = false;
 $(document).ready(function()
 {
     $(document).keydown(function (e) {
-        if(e.key == escapeKey) // start or restart
-            start();
-        if((e.key == key1) || (e.key == key2))
-            play("event");
+        if(!modalStatus)
+        {
+            if(e.key == escapeKey) // start or restart
+            {
+                e.preventDefault();
+                start();
+            }
+    
+            if((e.key == key1) || (e.key == key2))
+            {
+                e.preventDefault();
+                play("event");
+            }
+        }
+        else
+            if(e.key == submitKey)
+            {
+                e.preventDefault();
+                $(".submit:visible").trigger("click");
+            }
     });
 
-    $("#container").mousemove(function(e) { // cursor coordinates
+    $("#gameContainer").mousemove(function(e) { // cursor coordinates
         if(mouseInsideContainer)
         {
             coordinates.x = e.pageX;
@@ -33,11 +51,11 @@ $(document).ready(function()
         }
     });
 
-    $("#container").mouseenter(function() {
+    $("#gameContainer").mouseenter(function() {
         mouseInsideContainer = true;
     });
 
-    $("#container").mouseleave(function(){
+    $("#gameContainer").mouseleave(function(){
         mouseInsideContainer = false;
         coordinates.x = null;
         coordinates.y = null;
@@ -79,6 +97,7 @@ function timerHandler(event) // start timer
 
 function start() // initial setup
 {
+    timerHandler("stop");
     reset();
     createBoard();
     var one = getRandomBetween(1, Math.pow(difficulty, 2) + 1);
@@ -94,7 +113,7 @@ function start() // initial setup
 function createBoard() // create board according to the current difficulty
 {
     for(var i = 1; i <= Math.pow(difficulty, 2); i++)
-        $("#container #template").clone().attr("id", i).appendTo("#container");
+        $("#gameContainer #tileTemplate").clone().attr("id", i).appendTo("#gameContainer");
 }
 
 function tap(elem, mode) // black or white square hitted
@@ -124,7 +143,6 @@ function tap(elem, mode) // black or white square hitted
             $(elem).removeClass("blinkRed");
             handleEndGame()
         },50);
-        //game over
     }
 }
 
@@ -132,7 +150,7 @@ function handleEndGame(win) // end game handler
 {
     if($(".endgame:visible").length)
     {
-        if(!$("#name").val().trim())
+        if($("#name:visible").length && !$("#name:visible").val())
             return false;
 
         if(win)
@@ -140,19 +158,36 @@ function handleEndGame(win) // end game handler
             localScore.id = $("#name").val();
             localScore.time = $(".endtime").text();
             localScore.rawTime = time;
-            localScore.difficulty = difficulty;
+            var tempDate = new Date();
+            var rawDate = Math.floor(new Date().valueOf()/1000);
+            var day = tempDate.getDate();
+            var month = tempDate.getMonth() + 1;
+            var year = tempDate.getFullYear();
+            localScore.date = (day < 10 ? "0" : "") + day + "/" + (month < 10 ? "0" : "") + month + "/" + year;
+            localScore.rawDate = rawDate;
 
             if (!localStorage.getItem("localScores"))
-                localStorage["localScores"] = "[" + JSON.stringify(localScore) + "]";
+            {
+                var temp = {};
+                $(".info select option").each(function(i, e){
+                    temp[$(e).text()] = [];
+                });
+
+                temp[$('#mode').find('option[value="'+$("#mode").val()+'"]').text()].push(localScore);
+                localStorage["localScores"] = JSON.stringify(temp);
+            }
             else
             {
+                var diffName = $("#mode option:selected").text();
                 var tmp = JSON.parse(localStorage["localScores"]);
-                tmp.push(localScore);
-
+                tmp[diffName].push(localScore);
                 localStorage["localScores"] = JSON.stringify(tmp);
             }
+            if(leaderboardDiffName == $("#difficulty option:selected").val())
+                $("#sort").trigger('change');
         }
 
+        modalStatus = false;
         $(".endgame").hide();
         return false;
     }
@@ -174,14 +209,12 @@ function handleEndGame(win) // end game handler
         $(".endgame").css("display", "flex");
         $(".loseGame").css("display", "flex").prev().hide();
     }
-
+    modalStatus = true;
     gameEnded = true;
 }
 
 function checkGameEnded()
-{
-    return score >= goal;
-}
+{ return score >= goal; }
 
 function drawSquare(prevPoint) // new square
 {
@@ -205,7 +238,7 @@ function reset() //game reset
     score = -1;
     $(".score, .timer").text("0");
 
-    $("#container > .square:not(#template)").each(function(){
+    $("#gameContainer > .square:not(#tileTemplate)").each(function(){
         $(this).remove();
     })
     timerHandler("reset");
