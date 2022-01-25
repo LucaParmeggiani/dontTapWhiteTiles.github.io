@@ -1,73 +1,85 @@
 <!DOCTYPE html>
 <html lang = "en">
-<head>
-    <meta charset = "UTF-8">
-    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
-    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
-    <link rel = "icon" type = "image/svg+xml" href = "assets/images/favIcon.svg">
-    <link rel = "stylesheet" href = "css/generalStyle.css">
-    <link rel = "stylesheet" href = "css/gameStyle.css">
-    <link rel = "stylesheet" href = "css/leaderboardStyle.css">
-    <title>dontTapWhiteTiles</title>
-</head>
-<body>
-    <div class = "externalContainer">
+    <head>
+        <meta charset = "UTF-8">
+        <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+        <link rel = "icon" type = "image/svg+xml" href = "assets/images/favIcon.svg">
+        <link rel = "stylesheet" href = "css/generalStyle.css">
+        <link rel = "stylesheet" href = "css/gameStyle.css">
+        <link rel = "stylesheet" href = "css/leaderboardStyle.css">
+        <title>Don't Tap White Tiles</title>
+    </head>
+    <body>
+        <header>
+            <p class="title">Don't Tap <span>White</span> Tiles</p>
+        </header>
+        <div class = "externalContainer">
+            <section class = "game">
+                <div class = "info">
+                    <p class = "score">0</p>
+                    <select name = "mode" id = "mode" class = "mode">
+                        <option value = "3" data-goal = "10">Easy</option>
+                        <option value = "4" data-goal = "15">Normal</option>
+                        <option value = "5" data-goal = "20">Hard</option>
+                        <option value = "6" data-goal = "25">Insane</option>
+                        <option value = "7" data-goal = "30">Hell</option>
+                        <option value = "8" data-goal = "35">Impossible</option>
+                    </select>
+                    <p class = "timer">0</p>
+                </div>
+                <div class = "endgame">
+                    <div class = "winGame">
+                        <h1>YOU WIN!</h1>
+                        <label for = "name">Name</label>
+                        <input id = "name" type = "text" placeholder = "name..." maxlength = "10">
+                        <p class = "endtime"></p>
+                        <p class = "submit" onclick = "handleEndGame(1)">Submit</p>
+                    </div>
+                    <div class = "loseGame">
+                        <h1>YOU LOSE!</h1>
+                        <p class = "submit" onclick = "handleEndGame(0)">Retry</p>
+                    </div>
+                </div>
+                <div class="deleteScore">
+                    <div class="deleteModal" data-delete = "">
+                        <p>Do you want to delete this score?</p>
+                        <p class="deleteName"></p>
+                        <p class="deleteTime"></p>
+                        <p class="deleteDate"></p>
+                    <div class="deleteChoice">
+                        <p class = "submit" onclick = "deleteScore(deleteScore($(this).parent().attr('data-delete')))">Yes</p>
+                        <p class = "reject" onclick = "deleteScore(-1)">No</p>
+                    </div>
+                    <p class="disclaimer">p.s. you can't undo this action</p>
+                    </div>
+                </div>
+                <div id = "gameContainer" class = "sizeEasy">
+                    <div class="restart" onclick = "start()">Start</div>
+                    <div id = "tileTemplate" class = "square" data-mode = "" onclick = "tap(this, $(this).attr('data-mode'))"></div>
+                </div>
+            </section>
 
-        <section class = "leaderboard">
+            <section class = "leaderboard">
             <div class = "options">
                 <select name = "sort" id = "sort">
                     <option value = "time">Time</option>
                     <option value = "date">Date</option>
-                </select>
-                <select name = "difficulty" id = "difficulty">
-                    <option value = "Easy">Easy</option>
-                    <option value = "Normal">Normal</option>
-                    <option value = "Hard">Hard</option>
-                    <option value = "Insane">Insane</option>
-                    <option value = "Hell">Hell</option>
-                    <option value = "Impossible">Impossible</option>
                 </select>
             </div>
             <div class = "leaderboardGrid">
                 <div class = "headerGrid">
                     <div class = "headerName">Name</div>
                     <div class = "headerTime">Time</div>
+                    <div class = "headerDate">Date</div>
                 </div>
                 <div class = "bodyGrid"></div>
-                <div class = "leaderboardTemplate"><div class = "leaderboardName"></div><div class = "leaderboardTime"></div></div>
+                <div class = "leaderboardTemplate" id="" onclick="deleteModal($(this).attr('id'));">
+                    <div class = "leaderboardName"></div>
+                    <div class = "leaderboardTime"></div>
+                    <div class = "leaderboardDate"></div>
+                </div>
             </table>
-        </section>
-
-        <section class = "game">
-            <div class = "info">
-                <p class = "button" onclick = "start()">START</p>
-                <p class = "score">0</p>
-                <p class = "timer">0</p>
-                <select name = "mode" id = "mode" class = "mode">
-                    <option value = "3" data-goal = "10">Easy</option>
-                    <option value = "4" data-goal = "15">Normal</option>
-                    <option value = "5" data-goal = "20">Hard</option>
-                    <option value = "6" data-goal = "25">Insane</option>
-                    <option value = "7" data-goal = "30">Hell</option>
-                    <option value = "8" data-goal = "35">Impossible</option>
-                </select>
-            </div>
-            <div class = "endgame">
-                <div class = "winGame">
-                    <h1>HAI VINTO!</h1>
-                    <label for = "name">Nome</label>
-                    <input id = "name" type = "text" placeholder = "nome...">
-                    <p class = "endtime"></p>
-                    <p class = "submit" onclick = "handleEndGame(1)">Submit</p>
-                </div>
-                <div class = "loseGame">
-                    <h1>HAI PERSO!</h1>
-                    <p class = "submit" onclick = "handleEndGame(0)">Submit</p>
-                </div>
-            </div>
-            <div id = "gameContainer" class = "sizeEasy">
-                <div id = "tileTemplate" class = "square" data-mode = "" onclick = "tap(this, $(this).attr('data-mode'))"></div>
-            </div>
         </section>
 
     </div>
@@ -75,5 +87,6 @@
     <script src = "js/gameScript.js"></script>
     <script src = "js/optionScript.js"></script>
     <script src = "js/leaderboardScript.js"></script>
+    <script src = "js/generalScript.js"></script>
 </body>
 </html>

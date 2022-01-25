@@ -62,6 +62,17 @@ $(document).ready(function()
     });
 
     start();
+
+    $(window).resize(function(){ // responsive
+        if($(window).width() <= 750)
+            $("#gameContainer").css("height", $("#gameContainer").width() + "px");
+        else
+            $("#gameContainer").css("height", "600px");
+    });
+
+    $(".restart").css("display", "flex");
+
+    $(window).trigger("resize");
 });
 
 function play(type) // trigger click at cursor coordinates when binded keys are pressed
@@ -97,6 +108,7 @@ function timerHandler(event) // start timer
 
 function start() // initial setup
 {
+    $(".restart").fadeOut();
     timerHandler("stop");
     reset();
     createBoard();
@@ -104,10 +116,8 @@ function start() // initial setup
     do
         var two = getRandomBetween(1, Math.pow(difficulty, 2) + 1);
     while(two == one)
-    $("#" + one).attr("data-mode", "hit");
-    $("#" + two).attr("data-mode", "hit");
-    $("#" + one).addClass("point");
-    $("#" + two).addClass("point");
+    $("#" + one + ",#" + two).attr("data-mode", "hit");
+    $("#" + one + ",#" + two).addClass("point");
 }
 
 function createBoard() // create board according to the current difficulty
@@ -172,21 +182,19 @@ function handleEndGame(win) // end game handler
                 $(".info select option").each(function(i, e){
                     temp[$(e).text()] = [];
                 });
-
                 temp[$('#mode').find('option[value="'+$("#mode").val()+'"]').text()].push(localScore);
-                localStorage["localScores"] = JSON.stringify(temp);
             }
             else
             {
                 var diffName = $("#mode option:selected").text();
-                var tmp = JSON.parse(localStorage["localScores"]);
-                tmp[diffName].push(localScore);
-                localStorage["localScores"] = JSON.stringify(tmp);
+                var temp = JSON.parse(localStorage["localScores"]);
+                temp[diffName].push(localScore);
             }
-            if(leaderboardDiffName == $("#difficulty option:selected").val())
-                $("#sort").trigger('change');
+            localStorage["localScores"] = JSON.stringify(temp);
+            $("#sort").trigger("change");
         }
 
+        $(".restart").css("display", "flex").hide().fadeIn();
         modalStatus = false;
         $(".endgame").hide();
         return false;
@@ -196,8 +204,6 @@ function handleEndGame(win) // end game handler
     {
         $(".endgame").css("display", "flex");
         $(".winGame").css("display", "flex").next().hide();
-
-        $('#name').val('');
 
         var min = "0" + Math.floor((time / 100) / 60);
         var sec = "0" + Math.floor((time - (min * 6000)) / 100);
@@ -235,7 +241,7 @@ function reset() //game reset
     preventDobuleInterval = false;
     gameEnded = false;
 
-    score = -1;
+    score = null;
     $(".score, .timer").text("0");
 
     $("#gameContainer > .square:not(#tileTemplate)").each(function(){

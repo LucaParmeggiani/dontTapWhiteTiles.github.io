@@ -1,6 +1,6 @@
 section.game{
     width: 100%;
-    height: 100vh;
+    margin-top: 160px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,7 +11,33 @@ section.game{
     width: 600px;
     height: 600px;
     display: grid;
-    border: 1px solid black;
+    transition: 0.15s;
+    position: relative;
+    border: 1px solid #001225;
+}
+
+.info{
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr;
+    width: 600px;
+    text-align: center;
+    transition: 0.15s;
+    user-select: none;
+    text-shadow: 1px 1px #ABC4FF;
+}
+
+@media screen and (max-width: 1050px){
+    .game{ margin-top: 100px !important; }
+}
+
+@media screen and (max-width: 750px){
+    .deleteModal, .winGame, .loseGame { width: 60% !important; }
+
+    .deleteModal{ height: 60% !important; }
+
+    #gameContainer{ width: 80%; }
+
+    .leaderboard{ width: 80% !important; }
 }
 
 .sizeEasy{
@@ -45,46 +71,64 @@ section.game{
 }
 
 .square{
-    border: 2px solid black;
-    background-color: white;
+    border: 1px solid #001225;
+    background-color: #E2EAFC;
 }
 
-.info{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    width: 600px;
-    text-align: center;
+.score, .timer{
+    font-size: 19px;
+    color: #5676A5;
 }
 
-.score{ font-size: 19px; }
+.score::after{ content: " pt"; }
 
-.timer{ font-size: 19px; }
-
-.button, .mode{
-    border: 1px solid black;
-    padding: 4px;
-    transition: .2s;
-}
+.timer::after{ content: " s"; }
 
 .info select{
     appearance: none;
     text-align: center;
-    height: 28px;
-    width: 100%;
+    width: 75%;
     font-size: 16px;
     margin: auto;
 }
 
-.button:hover, .mode:hover{
-    cursor: pointer;
-    user-select: none;
-    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+.mode{
+    outline-style: none;
+    background: #D7E3FC;
+    box-shadow:  0 0 4px #ABC4FF;
+    color: #00284B;
+    border: none;
+    padding: 4px;
+    border-radius: 4px 4px 0 0;
     transition: .2s;
+    font-weight: bold;
 }
 
-.point{ transition: .1s; background-color: #292929; }
+.mode:hover{
+    cursor: pointer;
+    user-select: none;
+}
 
-.blinkRed{ background-color: red; }
+.mode:active{
+    box-shadow: 0 0 6px #ABC4FF;
+    transition: .15s;
+}
+
+.mode *{
+    font-size: 16px;
+    color: #5676A5;
+    background-color: #D7E3FC;
+}
+
+.point{
+    box-shadow: inset 0 0 4px #00284B;
+    transition: .1s;
+    background-color: #001225;
+}
+
+.point:hover{ opacity: .95; }
+
+.blinkRed{ background-color: #99573f; }
 
 #tileTemplate{ display: none; }
 
@@ -96,24 +140,75 @@ section.game{
     width: 100%;
     height: 100%;
     z-index: 1;
-    background: rgba(255,255,255,0.9);
+    background: rgba(193,211,254,.9);
     justify-content: center;
     align-items: center;
 }
 
 .winGame, .loseGame{
+    user-select: none;
     display: none;
     flex-flow: column;
     width: 40%;
     height: 40%;
-    background-color: #fff;
-    border: 1px solid #000;
-    padding: 10px;
+    background-color: #D7E3FC;
+    border: none;
+    border-radius: 16px;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 0 8px #5676A5;
+    transition: .2s;
 }
 
-.submit{
-    border: 1px solid #000;
-    padding: 4px;
+.loseGame h1{
+    color: #99573f;
+    text-shadow: 1px 1px #ffa584;
+}
+
+.winGame h1{
+    color: #57bd7a;
+    text-shadow: 1px 1px #44741e;
+}
+
+.winGame #name{
+    outline: none;
+    text-align: center;
+    padding: 8px 0;
+    font-size: 20px;
+    margin-top: 4px;
+    border: none;
+    background-color: #C1D3FE;
+    box-shadow: 0 0 4px #ABC4FF;
+    border-radius: 4px;
+    color: #00284B;
+}
+
+::placeholder { color: #004b8dd2; }
+
+:-ms-input-placeholder { color: #004b8dd2; }
+
+.submit, .reject{
+    border-radius: 4px;
+    padding: 8px;
+    background-color: #E2EAFC;
+    box-shadow: 0 0 4px #ABC4FF;
+    text-shadow: 1px 1px #ABC4FF;
+}
+
+.submit:hover, .reject:hover{ box-shadow: 0 0 6px #ABC4FF; }
+
+.submit:active, .reject:active{ box-shadow: 0 0 8px #ABC4FF; }
+
+.restart{
+    display: none;
+    color: #D7E3FC;
+    text-shadow: 1px 1px #383838;
+    background-color: rgba(0, 40, 75, .85);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    user-select: none;
 }

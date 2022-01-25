@@ -11,6 +11,7 @@ var size;
 
 $("#mode").change(function(){ // change difficulty
     difficulty = parseInt($(this).val());
+    
     goal = parseInt($(this).find('option[value="'+$(this).val()+'"]').attr('data-goal'));
     $("#gameContainer").removeClass();
 
@@ -36,4 +37,7 @@ $("#mode").change(function(){ // change difficulty
     }
     $("#gameContainer").addClass(size);
     start();
+
+    leaderboardDiffName = $(this).find(':selected').text();
+    leaderboardUpdate(leaderboardDiffName, JSON.parse(localStorage["localScores"]));
 });
