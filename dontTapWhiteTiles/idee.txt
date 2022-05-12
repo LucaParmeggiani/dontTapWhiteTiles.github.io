@@ -1,3 +1,0 @@
-pallini a lato per spostarsi di section
-rendere clickabili time e date nella leaderboard per sortare da li
-vedi gli ultimi 50 score (col tastino [see more])

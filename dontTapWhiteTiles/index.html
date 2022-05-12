@@ -15,6 +15,16 @@
             <p class="title">Don't Tap <span>White</span> Tiles</p>
         </header>
         <div class = "externalContainer">
+            <div class="pages">
+                <div class="switchContainer">
+                    <div class="switchContainerGame">
+                        <p class="gamePage active" onclick="switchTo('game', $(this))"></p>
+                    </div>
+                    <div class="switchContainerLeaderboard">
+                        <p class="leaderboardPage" onclick="switchTo('leaderboard', $(this))"></p>
+                    </div>
+                </div>
+            </div>
             <section class = "game">
                 <div class = "info">
                     <p class = "score">0</p>
@@ -41,6 +51,13 @@
                         <p class = "submit" onclick = "handleEndGame(0)">Retry</p>
                     </div>
                 </div>
+                <div id = "gameContainer" class = "sizeEasy">
+                    <div class="restart" onclick = "start()">Start</div>
+                    <div id = "tileTemplate" class = "square" data-mode = "" onclick = "tap(this, $(this).attr('data-mode'))"></div>
+                </div>
+            </section>
+
+            <section class = "leaderboard">
                 <div class="deleteScore">
                     <div class="deleteModal" data-delete = "">
                         <p>Do you want to delete this score?</p>
@@ -54,39 +71,46 @@
                     <p class="disclaimer">p.s. you can't undo this action</p>
                     </div>
                 </div>
-                <div id = "gameContainer" class = "sizeEasy">
-                    <div class="restart" onclick = "start()">Start</div>
-                    <div id = "tileTemplate" class = "square" data-mode = "" onclick = "tap(this, $(this).attr('data-mode'))"></div>
+                <div class = "leaderboardGrid">
+                    <div class = "headerGrid">
+                        <div class = "headerName">
+                            <div class="sortIcon">
+                                <img src = "assets/icons/name.svg" alt = "name">
+                            </div>
+                            <p class="sortCategory">Name</p>
+                        </div>
+                        <div class = "headerTime" onclick="sortLeaderboard('time', 'dec')">
+                            <div class="sortIcon">
+                                <img src = "assets/icons/time.svg" alt = "time">
+                            </div>
+                            <p class="sortCategory">Time</p>
+                            <div class="sortArrow">
+                                <img id="stateArrowTime" class="rotateDown" src = "assets/icons/arrow.svg">
+                            </div>
+                        </div>
+                        <div class = "headerDate" onclick="sortLeaderboard('date', 'asc')">
+                            <div class="sortIcon">
+                                <img src = "assets/icons/date.svg" alt = "date">
+                            </div>
+                            <p class="sortCategory">Date</p>
+                            <div class="sortArrow">
+                                <img id="stateArrowDate" src = "assets/icons/none.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "bodyGrid"></div>
+                    <div class = "leaderboardTemplate" id="" onclick="deleteModal($(this).attr('id'));">
+                        <div class = "leaderboardName"></div>
+                        <div class = "leaderboardTime"></div>
+                        <div class = "leaderboardDate"></div>
+                    </div>
                 </div>
             </section>
-
-            <section class = "leaderboard">
-            <div class = "options">
-                <select name = "sort" id = "sort">
-                    <option value = "time">Time</option>
-                    <option value = "date">Date</option>
-                </select>
-            </div>
-            <div class = "leaderboardGrid">
-                <div class = "headerGrid">
-                    <div class = "headerName">Name</div>
-                    <div class = "headerTime">Time</div>
-                    <div class = "headerDate">Date</div>
-                </div>
-                <div class = "bodyGrid"></div>
-                <div class = "leaderboardTemplate" id="" onclick="deleteModal($(this).attr('id'));">
-                    <div class = "leaderboardName"></div>
-                    <div class = "leaderboardTime"></div>
-                    <div class = "leaderboardDate"></div>
-                </div>
-            </table>
-        </section>
-
-    </div>
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src = "js/gameScript.js"></script>
-    <script src = "js/optionScript.js"></script>
-    <script src = "js/leaderboardScript.js"></script>
-    <script src = "js/generalScript.js"></script>
-</body>
+        </div>
+        <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src = "js/gameScript.js"></script>
+        <script src = "js/optionScript.js"></script>
+        <script src = "js/leaderboardScript.js"></script>
+        <script src = "js/generalScript.js"></script>
+    </body>
 </html>

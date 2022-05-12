@@ -2,36 +2,104 @@ var leaderboardDiffName;
 
 $(document).ready(function(){
     leaderboardDiffName = $("#mode :selected").text();
-    
-    $("#sort").change(function(){
-        var sortMode = $(this).val();
-        switch(sortMode)
-        {
-            case "time":
-                var data = JSON.parse(localStorage["localScores"]);
-                var temp = data[leaderboardDiffName];
-                temp.sort(function(a, b){
-                    return a.rawTime - b.rawTime;
-                });
-                data[leaderboardDiffName] = temp;
-
-                leaderboardUpdate(leaderboardDiffName, data);
-                break;
-            case "date":
-                var data = JSON.parse(localStorage["localScores"]);
-                var temp = data[leaderboardDiffName];
-                temp.sort(function(a, b){
-                    return b.rawDate - a.rawDate;
-                });
-                data[leaderboardDiffName] = temp;
-
-                leaderboardUpdate(leaderboardDiffName, data);
-                break;
-        }
-    });
-
-    $("#sort").trigger('change');
+    sortLeaderboard("time", "asc");
 });
+
+function sortLeaderboard(mode, dir)
+{
+    switch (mode)
+    {
+        case "time":
+
+            if($("#stateArrowTime").attr("src") == "assets/icons/arrow.svg")
+                $("#stateArrowTime").toggleClass("rotateUp rotateDown");
+            else
+            {
+                $("#stateArrowTime").addClass("slideOut");
+                animationEnd("Time", "arrow");
+            }
+
+            if($("#stateArrowDate").attr("src") == "assets/icons/arrow.svg")
+            {
+                $("#stateArrowDate").addClass("slideOut");
+                animationEnd("Date", "none");
+                $("#stateArrowDate").removeClass("rotateUp rotateDown");
+            }
+
+            if(dir == "dec")
+            {
+                $(".headerTime").attr("onclick", "sortLeaderboard('time', 'asc')");
+                $("#stateArrowTime").addClass("rotateUp");
+            }
+            else
+            {
+                $(".headerTime").attr("onclick", "sortLeaderboard('time', 'dec')");
+                $("#stateArrowTime").addClass("rotateDown");
+            }
+
+            var data = JSON.parse(localStorage["localScores"]);
+            var temp = data[leaderboardDiffName];
+            temp.sort(function(a, b){
+                return a.rawTime - b.rawTime;
+            });
+            if(dir == "dec")
+                temp.reverse();
+            data[leaderboardDiffName] = temp;
+
+            leaderboardUpdate(leaderboardDiffName, data);
+            break;
+        case "date":
+
+            if($("#stateArrowDate").attr("src") == "assets/icons/arrow.svg")
+                $("#stateArrowDate").toggleClass("rotateUp rotateDown");
+            else
+            {
+                $("#stateArrowDate").addClass("slideOut");
+                animationEnd("Date", "arrow");
+            }
+
+            if($("#stateArrowTime").attr("src") == "assets/icons/arrow.svg")
+            {
+                $("#stateArrowTime").addClass("slideOut");
+                animationEnd("Time", "none");
+                $("#stateArrowTime").removeClass("rotateUp rotateDown");
+            }
+
+            if(dir == "dec")
+            {
+                $(".headerDate").attr("onclick", "sortLeaderboard('date', 'asc')");
+                $("#stateArrowDate").addClass("rotateUp");
+            }
+            else
+            {
+                $(".headerDate").attr("onclick", "sortLeaderboard('date', 'dec')");
+                $("#stateArrowDate").addClass("rotateDown");
+            }
+
+            var data = JSON.parse(localStorage["localScores"]);
+            var temp = data[leaderboardDiffName];
+            temp.sort(function(a, b){
+                return b.rawDate - a.rawDate;
+            });
+            if(dir == "dec")
+                temp.reverse();
+            data[leaderboardDiffName] = temp;
+
+            leaderboardUpdate(leaderboardDiffName, data);
+            break;
+    }
+}
+
+function animationEnd(mode, replace)
+{
+    $("#stateArrow" + mode).one('animationend', function(){
+        $("#stateArrow" + mode).attr("src", "assets/icons/"+ replace +".svg");
+        $("#stateArrow" + mode).toggleClass("slideOut slideIn");
+    });
+    $("#stateArrow" + mode).one("animationend", function(){
+        $("#stateArrow" + mode).removeClass("slideIn slideOut");
+    });
+}
 
 function leaderboardUpdate(leaderboardDiffName, arr)
 {

@@ -3,8 +3,8 @@
 html, body{
     margin: 0;
     padding: 0;
-    min-width: 500px;
-    min-height: 700px;
+    width: 100%;
+    height: 100%;
     font-family: 'Poppins', sans-serif;
     background-color: #EDF2FB;
     color: #00284B;
@@ -51,3 +51,71 @@ header{
 }
 
 header span{ color: white; }
+
+.pages{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    right: 0;
+    height: 100%;
+    width: 50px;
+}
+
+.switchContainer{
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+}
+
+.switchContainerGame, .switchContainerLeaderboard{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+    width: 50%;
+}
+
+.gamePage, .leaderboardPage{
+    margin: 0;
+    width: 50%;
+    border-radius: 10px;
+    height: 25%;
+    background-color: #00284B;
+    box-shadow: 0px 0px 5px 0px rgba(0,46,86,1);
+    transition: .2s cubic-bezier(.175, .885, .32, 1.275);
+}
+
+.gamePage:hover, .leaderboardPage:hover{
+    cursor: pointer;
+}
+
+.active{
+    height: 80%;
+    background-color: #5676A5;
+    transition: .2s cubic-bezier(.175, .885, .32, 1.275);
+}
+
+@media screen and (max-width: 650px){
+    .pages{
+        bottom: 0px;
+        width: 100%;
+        height: 80px;
+    }
+
+    .switchContainer{
+        flex-direction: row;
+        width: 50%;
+        height: 100%;
+    }
+
+    .switchContainerGame, .switchContainerLeaderboard{ width: 40%; }
+
+    .active{
+        height: 70%;
+        border-radius: 20px;
+    }
+}

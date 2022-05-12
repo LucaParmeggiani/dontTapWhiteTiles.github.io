@@ -13,9 +13,13 @@
 <hr>
 
 # Releases
+## v 3.0.0
+<p>🎉 game section and leaderboard section are now divided into two different pages
+<p>✔️ restiled the leaderboard for an easier user experience
+<p>❌ fixed some minor bug
+
 ## v 2.0.0
 <p>🎉 restiled everything so it doesn't look like shit anymore
-<p>🎉 responsive betch
 <p>✔️ you can now delete your score in the leaderboard by clicking them
 <p>✔️ added date on leaderboard
 <p>❌ fixed some minor bug
