@@ -13,6 +13,10 @@
 <hr>
 
 # Releases
+## v 3.1.0
+<p>✔️ added an option menu to change key bindings and for more stuff
+<p>❌ limited the leaderboard record to 50 to prevent slow down issues
+
 ## v 3.0.0
 <p>🎉 game section and leaderboard section are now divided into two different pages
 <p>✔️ restiled the leaderboard for an easier user experience

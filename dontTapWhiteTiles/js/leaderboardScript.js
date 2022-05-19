@@ -104,16 +104,20 @@ function animationEnd(mode, replace)
 function leaderboardUpdate(leaderboardDiffName, arr)
 {
     $(".bodyGrid").empty();
-    $(arr[leaderboardDiffName]).each(function(i, e){
-        var temp = $(".leaderboardTemplate").clone();
-        temp.removeClass("leaderboardTemplate");
-        temp.addClass("leaderboardField");
-        temp.find(".leaderboardName").text(e.id);
-        temp.find(".leaderboardTime").text(e.time);
-        temp.find(".leaderboardDate").text(e.date);
-        temp.attr("id", e.rawDate);
-        $(".bodyGrid").append(temp);
-    });
+    for(var i = 0; i < 50; i++)
+    {
+        if(arr[leaderboardDiffName][i])
+        {
+            var temp = $(".leaderboardTemplate").clone();
+            temp.removeClass("leaderboardTemplate");
+            temp.addClass("leaderboardField");
+            temp.find(".leaderboardName").text(arr[leaderboardDiffName][i].id);
+            temp.find(".leaderboardTime").text(arr[leaderboardDiffName][i].time);
+            temp.find(".leaderboardDate").text(arr[leaderboardDiffName][i].date);
+            temp.attr("id", arr[leaderboardDiffName][i].rawDate);
+            $(".bodyGrid").append(temp);
+        }
+    }
 }
 
 function deleteModal(idScore)

@@ -43,7 +43,7 @@ header{
     background-color: #E2EAFC;
     color: #00284B;
     text-shadow: 1px 1px #ABC4FF;
-    z-index: 1;
+    z-index: 2;
     user-select: none;
     box-shadow: 0px 0px 15px #00284B;
     letter-spacing: 25px;

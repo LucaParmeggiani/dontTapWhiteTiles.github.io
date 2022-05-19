@@ -8,13 +8,56 @@
         <link rel = "stylesheet" href = "css/generalStyle.css">
         <link rel = "stylesheet" href = "css/gameStyle.css">
         <link rel = "stylesheet" href = "css/leaderboardStyle.css">
+        <link rel = "stylesheet" href = "css/optionStyle.css">
         <title>Don't Tap White Tiles</title>
     </head>
     <body>
         <header>
             <p class="title">Don't Tap <span>White</span> Tiles</p>
         </header>
+
+        <div class="optionButton" onclick="options('open')">
+            <img src="assets\icons\option.svg" alt="optionButton" class="optionButtonIcon">
+        </div>
+        <div class="menuLables">
+            <p class="lables" onclick="openSubmenu($(this).attr('id'))" id="keyBindings">Key bindings</p>
+            <p class="lables" onclick="openSubmenu($(this).attr('id'))" id="reportBug">Report bug</p>
+            <p class="lables" onclick="openSubmenu($(this).attr('id'))" id="credits">Credits</p>
+            <p class="lables" id="version">V 3.1.0</p>
+        </div>
+
         <div class = "externalContainer">
+
+            <div class="optionsBg" onclick="closeMenu()">
+                <div class="subMenu">
+                    <div class="keyBindingSub">
+                        <h1 class="keyBindingSub-Title">Key bindings</h1>
+                        <div class="keys">
+                            <p>Key 1</p>
+                            <kbd class="key1" onclick="changeKey($(this))"></kbd>
+                        </div>
+                        <div class="keys">
+                            <p>Key 2</p>
+                            <kbd class="key2" onclick="changeKey($(this))"></kbd>
+                        </div>
+                        <div class="keys">
+                            <p>Option Key</p>
+                            <kbd class="openMenu" onclick="changeKey($(this))"></kbd>
+                        </div>
+                    </div>
+                    <div class="creditsSub">
+                        <h1 class="creditsSub-Title">Credits</h1>
+                        <p>Made by:</p>
+                        <p class="me">Luca Parmeggiani</p>
+                        <p>with ❤ and jQuery</p>
+                        <hr>
+                        <div class="github">
+                            <a href="https://github.com/LucaParmeggiani" class="github">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="pages">
                 <div class="switchContainer">
                     <div class="switchContainerGame">
