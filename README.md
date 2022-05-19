@@ -13,6 +13,9 @@
 <hr>
 
 # Releases
+## v 3.1.1
+<p>❌ fixed a bug in the key bindings
+
 ## v 3.1.0
 <p>✔️ added an option menu to change key bindings and for more stuff
 <p>❌ limited the leaderboard record to 50 to prevent slow down issues

@@ -19,8 +19,20 @@ $(document).ready(function() {
     key1 = data[0];
     key2 = data[1];
     openMenu = data[2];
+    keyBindingArray = [data[0], data[1], data[2]];
 
     updateKeys();
+
+    $(document).keyup(function (e) {
+        if(e.key == openMenu) // start or restart
+        {
+            e.preventDefault();
+            if($(".optionButton").attr("onclick").split("'")[1] == "open")
+                options("open");
+            else
+                options("close");
+        }
+    });
 });
 
 function updateKeys()
@@ -113,7 +125,8 @@ function changeKey(elem)
 {
     var newKey = window.prompt("Change key", elem.text());
     var checkNewKey = newKey.split("");
-    if(newKey == null || newKey == "" || checkNewKey[1] != null)
+    console.log(newKey, checkNewKey)
+    if(newKey == null || newKey == "" || checkNewKey[1] != null || keyBindingArray.includes(newKey))
     {
         alert("Invalid key");
         return;
@@ -124,12 +137,15 @@ function changeKey(elem)
         {
             case "key1":
                 keyBindingArray[0] = newKey;
+                key1 = newKey;
                 break;
             case "key2":
                 keyBindingArray[1] = newKey;
+                key2 = newKey;
                 break;
-            case "optionKey":
+            case "openMenu":
                 keyBindingArray[2] = newKey;
+                openMenu = newKey;
                 break;
         }
         localStorage.setItem("keyBindings", JSON.stringify(keyBindingArray));
