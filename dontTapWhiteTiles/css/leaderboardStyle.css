@@ -20,9 +20,9 @@
 }
 
 @media screen and (max-width: 750px){
-    .bodyGrid{
-        height: 75%;
-    }
+    .bodyGrid{ height: 75%; }
+    .sortIcon{ display: none; }
+    .sortCategory{ font-size: 20px; }
 }
 
 .headerGrid, .leaderboardRecord{

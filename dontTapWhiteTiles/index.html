@@ -23,7 +23,7 @@
             <p class="lables" onclick="openSubmenu($(this).attr('id'))" id="keyBindings">Key bindings</p>
             <p class="lables" onclick="openSubmenu($(this).attr('id'))" id="reportBug">Report bug</p>
             <p class="lables" onclick="openSubmenu($(this).attr('id'))" id="credits">Credits</p>
-            <p class="lables" id="version">V 3.1.1</p>
+            <p class="lables" id="version">V 3.1.2</p>
         </div>
 
         <div class = "externalContainer">
@@ -107,11 +107,11 @@
                         <p class="deleteName"></p>
                         <p class="deleteTime"></p>
                         <p class="deleteDate"></p>
-                    <div class="deleteChoice">
-                        <p class = "submit" onclick = "deleteScore(deleteScore($(this).parent().attr('data-delete')))">Yes</p>
-                        <p class = "reject" onclick = "deleteScore(-1)">No</p>
-                    </div>
-                    <p class="disclaimer">p.s. you can't undo this action</p>
+                        <div class="deleteChoice">
+                            <p class = "submit" onclick = "deleteScore($(this).parent().parent().attr('data-delete'))">Yes</p>
+                            <p class = "reject" onclick = "deleteScore(-1)">No</p>
+                        </div>
+                        <p class="disclaimer">p.s. you can't undo this action</p>
                     </div>
                 </div>
                 <div class = "leaderboardGrid">
